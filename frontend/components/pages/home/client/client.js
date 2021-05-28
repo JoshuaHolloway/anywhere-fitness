@@ -37,7 +37,7 @@ import ControlledAccordions from './accordian-controlled-1.js';
 // ==============================================
 // ==============================================
 
-const ClientHomePage = () => {
+const ClientHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
@@ -82,8 +82,14 @@ const ClientHomePage = () => {
 
   return (
     <div className="homepage homepage-client">
+
       <div className="container">
         <h1>Client Home Page</h1>
+        <Button variant="outlined" color="secondary" onClick={(event) => {
+          localStorage.removeItem("ourToken");
+          setLoggedIn(false);
+          history.push('/');
+        }}>Log Out</Button>
 
         {/* - - - - - - - - - - - - - - - - - - */}
         <div className="card">

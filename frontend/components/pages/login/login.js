@@ -62,13 +62,28 @@ const LoginPage = ({setLoggedIn, setRole}) => {
     //        history.push('/');
     //      })
     //      .catch(err => console.log(err));
-    setFormValues(init_form);
+    
+    axios.post("http://localhost:4000/login", formData)
+      .then((response) => {
+        if (response.data.status == "success") {
+          console.log('successful response from logging in');
+          console.log('response: ', response);
 
-    // Do this in 'fulfilled' .then() callback for above Promise resulting from POST request to API-URL/api/auth/login:
-    setLoggedIn(true);
-    const role_property_in_reponse_object_returned_from_post_request_to_api_login_endpoint = 'instructor';
-    setRole(role_property_in_reponse_object_returned_from_post_request_to_api_login_endpoint);
-    history.push('/');
+          localStorage.setItem("ourToken", response.data.token);
+
+          // Do this in 'fulfilled' .then() callback for above Promise resulting from POST request to API-URL/api/auth/login:
+          setLoggedIn(true);
+          const role_property_in_reponse_object_returned_from_post_request_to_api_login_endpoint = 'client';
+          setRole(role_property_in_reponse_object_returned_from_post_request_to_api_login_endpoint);
+          history.push('/');
+
+        } else {
+          alert("Sorry, try again.");
+        }
+      })
+      .catch();
+    
+    setFormValues(init_form);
   };
 
   // --------------------------------------------

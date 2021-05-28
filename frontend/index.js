@@ -45,7 +45,7 @@ const App = () => {
     <Router>
 
       <Route exact path="/">
-        {logged_in && role=='client' ? <ClientHomePage /> : 
+        {logged_in && role=='client' ? <ClientHomePage setLoggedIn={setLoggedIn} /> : 
           logged_in && role=='instructor' ? <InstructorHomePage /> : 
             <PublicHomePage />
         }

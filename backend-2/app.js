@@ -142,7 +142,7 @@ app.post("/login", async (req, res) => {
 
         if (result == true) {
           const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-          res.json({ status: "success", token: token });
+          res.json({ status: "success", token: token, role: user.role });
         } else {
           res.json({ status: "failure" });
         } // if (result == true)

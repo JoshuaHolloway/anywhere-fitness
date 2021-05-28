@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -80,16 +81,21 @@ const ClientHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
+  const history = useHistory();
+  const logout = () => {
+    localStorage.removeItem("ourToken");
+    setLoggedIn(false);
+    history.push('/');
+  };
+
+  // --------------------------------------------
+
   return (
     <div className="homepage homepage-client">
 
       <div className="container">
         <h1>Client Home Page</h1>
-        <Button variant="outlined" color="secondary" onClick={(event) => {
-          localStorage.removeItem("ourToken");
-          setLoggedIn(false);
-          history.push('/');
-        }}>Log Out</Button>
+        <Button variant="outlined" color="secondary" onClick={logout}>Log Out</Button>
 
         {/* - - - - - - - - - - - - - - - - - - */}
         <div className="card">

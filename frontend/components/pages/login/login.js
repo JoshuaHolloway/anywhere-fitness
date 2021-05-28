@@ -73,8 +73,7 @@ const LoginPage = ({setLoggedIn, setRole}) => {
 
           // Do this in 'fulfilled' .then() callback for above Promise resulting from POST request to API-URL/api/auth/login:
           setLoggedIn(true);
-          const role_property_in_reponse_object_returned_from_post_request_to_api_login_endpoint = 'client';
-          setRole(role_property_in_reponse_object_returned_from_post_request_to_api_login_endpoint);
+          setRole(response.data.role);
           history.push('/');
 
         } else {

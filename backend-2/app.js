@@ -121,6 +121,7 @@ app.post("/login", async (req, res) => {
     if (users.length > 0) {
       const user = users[0];
       console.log('user: ', user);
+      
   
       if (user.password === req.body.password) {
         const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);

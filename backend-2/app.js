@@ -11,6 +11,11 @@ const jwtsecret = "the most secret string of text in history";
 app.use(express.json());
 app.use(express.static("public"));
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
 // ==============================================
 
 const pets = client.db("JoshTestDB").collection("pets");
@@ -91,14 +96,21 @@ app.post("/register", async (req, res) => {
   const password = req.body.password;
   const role = req.body.role;
   
-  try {
-    const result = await users_collection.insertOne({name, username, email, password, role});
-    console.log('Added new user');
-    res.json(result);
-  } catch(e) { 
-    console.log('Adding user failed! Error: ', e);
-    res.json("Adding user failed!");
-  } 
+  bcrypt.genSalt(saltRounds).then((salt) => {
+    console.log('salt: ', salt);
+    bcrypt.hash(password, salt).then(async function(hash) {
+        // Store hash in your password DB.
+        console.log('hash: ', hash);
+        try {
+          const result = await users_collection.insertOne({name, username, email, password: hash, role});
+          console.log('Added new user');
+          res.json(result);
+        } catch(e) { 
+          console.log('Adding user failed! Error: ', e);
+          res.json("Adding user failed!");
+        } 
+    });
+  });
 });
 
 // ==============================================
@@ -121,7 +133,7 @@ app.post("/login", async (req, res) => {
     if (users.length > 0) {
       const user = users[0];
       console.log('user: ', user);
-      
+
   
       if (user.password === req.body.password) {
         const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);

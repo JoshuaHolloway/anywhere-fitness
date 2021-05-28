@@ -105,25 +105,34 @@ app.post("/register", async (req, res) => {
 // Login
 app.post("/login", async (req, res) => {
 
-  // TODO::
+  // Login:
   //  -Step 1: Search through database by username
   //  -Step 2: Compare entered password against the stored password
-
-  const username = 'alen12';
 
   try {
     
     // TODO: Add logic in registration to ensure that usernames are unique
-    const users = await users_collection.find({ username: username }).toArray();
-    const user = users[0];
-    console.log('user: ', user);
+    const users = await users_collection.find({ username: req.body.username }).toArray();
+    
+    console.log('req.body.username: ', req.body.username);
     console.log('req.body.password: ', req.body.password);
+    console.log('users: ', users);
+    
+    if (users.length > 0) {
+      const user = users[0];
+      console.log('user: ', user);
+  
+      if (user.password === req.body.password) {
+        const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
+        res.json({ status: "success", token: token });
+      } else {
+        res.json({ status: "failure" });
+      } // if (user.password === req.body.password)
 
-    if (user.password === req.body.password) {
-      const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-      res.json({ status: "success", token: token });
-    } 
-    else { res.json({ status: "failure" }); }
+    } else { // if (users > 0)
+      res.json({ status: "username not in database" });
+    }
+
   } catch (err) {
     console.log(err);
     res.json("No user named ");

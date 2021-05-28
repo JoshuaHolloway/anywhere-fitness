@@ -34,8 +34,6 @@ registerForm.addEventListener("submit", async e => {
     console.log('error: ', error);
   });
 
-  console.log('response: ', response);
-
 });
 
 // ==============================================

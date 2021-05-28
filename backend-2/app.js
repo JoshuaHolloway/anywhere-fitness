@@ -96,6 +96,7 @@ app.post("/register", async (req, res) => {
   const password = req.body.password;
   const role = req.body.role;
   
+  // Cryptographically hash password
   bcrypt.genSalt(saltRounds).then((salt) => {
     console.log('salt: ', salt);
     bcrypt.hash(password, salt).then(async function(hash) {
@@ -134,13 +135,27 @@ app.post("/login", async (req, res) => {
       const user = users[0];
       console.log('user: ', user);
 
-  
-      if (user.password === req.body.password) {
-        const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-        res.json({ status: "success", token: token });
-      } else {
-        res.json({ status: "failure" });
-      } // if (user.password === req.body.password)
+      // Compare hashed plain-text password against stored hashed password
+      const hash = user.password;
+      const plain_text_password = req.body.password;
+      bcrypt.compare(plain_text_password, hash, function(err, result) {
+        // result == true
+        console.log('Password is valid!');
+
+        if (result == true) {
+          const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
+          res.json({ status: "success", token: token });
+        } else {
+          res.json({ status: "failure" });
+        } // if (result == true)
+      });
+
+      // if (user.password === req.body.password) {
+      //   const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
+      //   res.json({ status: "success", token: token });
+      // } else {
+      //   res.json({ status: "failure" });
+      // } // if (user.password === req.body.password)
 
     } else { // if (users > 0)
       res.json({ status: "username not in database" });

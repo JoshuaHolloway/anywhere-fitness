@@ -14,7 +14,7 @@ app.use(express.static("public"));
 // ==============================================
 
 const pets = client.db("JoshTestDB").collection("pets");
-const users_db = client.db("JoshTestDB").collection("users");
+const users_collection = client.db("JoshTestDB").collection("users");
 
 // ==============================================
 // CRUD Read
@@ -92,7 +92,7 @@ app.post("/register", async (req, res) => {
   const role = req.body.role;
   
   try {
-    const result = await users_db.insertOne({name, username, email, password, role});
+    const result = await users_collection.insertOne({name, username, email, password, role});
     console.log('Added new user');
     res.json(result);
   } catch(e) { 
@@ -103,21 +103,44 @@ app.post("/register", async (req, res) => {
 
 // ==============================================
 // Login
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
 
   // TODO::
   //  -Step 1: Search through database by username
   //  -Step 2: Compare entered password against the stored password
 
-  
-  if (req.body.username === "johndoe" && req.body.password === "qwerty") {
+  const username = 'alen12';
 
-    const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-    res.json({ status: "success", token: token });
-  } 
-  else {
-    res.json({ status: "failure" });
+  try {
+    
+    // TODO: Add logic in registration to ensure that usernames are unique
+    const users = await users_collection.find({ username: username }).toArray();
+    const user = users[0];
+    console.log('user: ', user);
+    console.log('req.body.password: ', req.body.password);
+
+    if (user.password === req.body.password) {
+      const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
+      res.json({ status: "success", token: token });
+    } 
+    else { res.json({ status: "failure" }); }
+  } catch (err) {
+    console.log(err);
+    res.json("No user named ");
   }
+
+
+
+
+
+  
+  // if (req.body.username === "johndoe" && req.body.password === "qwerty") {
+  //   const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
+  //   res.json({ status: "success", token: token });
+  // } 
+  // else { res.json({ status: "failure" }); }
+
+
 });
 
 // ==============================================

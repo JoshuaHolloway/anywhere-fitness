@@ -1,0 +1,20 @@
+// Global colors go here
+
+:root {
+  --text-primary:      #FFFFFF;
+  --text-secondary:    #000000;
+  --bg-primary:        #F2F3F5;
+  --bg-secondary:      #FFFFFF;
+
+  --translucent-primary: rgba(255, 255, 255, 0.3);
+  --gradient-purple-starting: #7643AB;
+  --gradient-purple-ending: #993880;
+  --gradient-orange-starting:   #C85344;
+  --gradient-orange-ending:   #E78333;
+  --gradient-green-starting: #64C34C;
+  --gradient-green-ending: #338F9D;
+  --shadow-from: rgba(131, 0, 255, 0.42);
+  --base-shadow: rgba(0, 0, 0, 0.12); 
+  --shadow-to: rgba(131, 0, 255, 0.2);
+  --hover-shadow:  0 1px 13px 0px black;
+}

@@ -1,0 +1,36 @@
+.homepage {
+
+  height: 100vh;
+  width: 100vw;
+
+  background: var(--bg-primary);
+
+  &-public {}
+  &-client {
+    display: grid;
+    place-items: center;
+
+    > .container {
+      height: 80%;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+
+      .green_gradient_button {  }
+
+      .card {
+        border: dashed hotpink 4px;
+        background: lightgray;
+        border: solid gray 1px;
+        border-radius: 5px;
+        padding: 5%; 
+      }
+    }
+
+
+  }
+  &-instructor {}
+}
+.button1 { background: linear-gradient(90deg, var(--gradient-orange-starting), var(--gradient-orange-ending)); }

@@ -1,0 +1,18 @@
+// Global styles go here
+
+@import 'resets';
+@import 'colors';
+@import 'pages';
+
+body {
+  font-family: Averta,Helvetica,Arial,sans-serif;
+}
+
+.hide-display {
+  display: none;
+}
+.hide-visibility {
+  visibility: hidden;
+}
+
+a { color: var(--text-primary); }

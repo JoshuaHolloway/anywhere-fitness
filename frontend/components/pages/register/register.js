@@ -57,11 +57,11 @@ const RegisterPage = () => {
     event.preventDefault();
 
     const formData = {
-      "name":      form_values.name,
-      "email":     form_values.email,
       "username":  form_values.username,
       "password":  form_values.password,
-      "user-type": form_values.role,
+      "name":      form_values.name,
+      "email":     form_values.email,
+      "role": form_values.role,
     };
 
     const login_link   = document.querySelector('#register__login-link');
@@ -75,10 +75,16 @@ const RegisterPage = () => {
     //        history.push('/login');
     //      })
     //      .catch(err => console.log(err));
-    setFormValues(init_form);
 
-    // Do this in 'fulfilled' .then() callback for above Promise resulting from POST request to API-URL/api/auth/register:
-    history.push('/login')
+    axios.post("http://localhost:4000/register", formData)
+      .then((response) => {
+        console.log('response: ', response);
+        history.push('/login')
+      }).catch((error) => {
+        console.log('error: ', error);
+      });
+
+    setFormValues(init_form);
   };
 
   // --------------------------------------------

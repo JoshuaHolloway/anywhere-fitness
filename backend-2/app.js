@@ -8,13 +8,15 @@ const mongodb = require('mongodb');
 const jwt = require("jsonwebtoken");
 const jwtsecret = "the most secret string of text in history";
 
+const cors = require('cors');
+
 app.use(express.json());
+app.use(cors());
 app.use(express.static("public"));
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
+
 
 // ==============================================
 
@@ -118,10 +120,6 @@ app.post("/register", async (req, res) => {
 // Login
 app.post("/login", async (req, res) => {
 
-  // Login:
-  //  -Step 1: Search through database by username
-  //  -Step 2: Compare entered password against the stored password
-
   try {
     
     // TODO: Add logic in registration to ensure that usernames are unique
@@ -150,13 +148,6 @@ app.post("/login", async (req, res) => {
         } // if (result == true)
       });
 
-      // if (user.password === req.body.password) {
-      //   const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-      //   res.json({ status: "success", token: token });
-      // } else {
-      //   res.json({ status: "failure" });
-      // } // if (user.password === req.body.password)
-
     } else { // if (users > 0)
       res.json({ status: "username not in database" });
     }
@@ -165,18 +156,6 @@ app.post("/login", async (req, res) => {
     console.log(err);
     res.json("No user named ");
   }
-
-
-
-
-
-  
-  // if (req.body.username === "johndoe" && req.body.password === "qwerty") {
-  //   const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-  //   res.json({ status: "success", token: token });
-  // } 
-  // else { res.json({ status: "failure" }); }
-
 
 });
 

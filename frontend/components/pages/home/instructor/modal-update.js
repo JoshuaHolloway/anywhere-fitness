@@ -35,7 +35,7 @@ import {buttonStylesGreen} from '../../../../global-styles/form-styles.js';
 // ==============================================
 // ==============================================
 
-const Modal_UpdateClasses = ({card_selected}) => {
+const Modal_UpdateClasses = ({card_selected, sessions, setSessions}) => {
 
   // --------------------------------------------
 
@@ -94,7 +94,6 @@ const Modal_UpdateClasses = ({card_selected}) => {
         Update Class
       </Button>
 
-
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -112,7 +111,7 @@ const Modal_UpdateClasses = ({card_selected}) => {
             <h2 id="transition-modal-title">Update Class</h2>
             <p id="transition-modal-description">For Instructor</p>
 
-            <ModalContents />
+            <ModalContents setOpen={setOpen} card_selected={card_selected} sessions={sessions} setSessions={setSessions} />
           </div>
         </Fade>
       </Modal>

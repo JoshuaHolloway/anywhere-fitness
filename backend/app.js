@@ -19,7 +19,6 @@ app.use(express.static("public"));
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
 // ==============================================
 
 const pets               = client.db("JoshTestDB").collection("pets");
@@ -30,20 +29,6 @@ const classes_collection = client.db("JoshTestDB").collection("classes");
 //
 // CRUD Read
 //
-app.get("/read", async (req, res) => {
-  try {
-    const dogs = await db.collection("pets").find({ species: "dog" }).toArray();
-    if (dogs.length) {
-      res.json(dogs);
-    } else {
-      res.json("You do not currently have any dogs in your pets collection.");
-    }
-  } catch (err) {
-    console.log(err);
-    res.json("Try again later.");
-  }
-});
-
 app.get("/classes", async (req, res) => {
   try {
     const classes = await classes_collection.find().toArray();
@@ -59,19 +44,7 @@ app.get("/classes", async (req, res) => {
 //
 // CRUD Create
 //
-app.get("/create", async (req, res) => {
-  try {
-    const result = await pets.insertOne({name: 'alen', species: 'dog', age: 7});
-    console.log('Added new animal');
-  
-    res.json(result)
-  } catch(e) { 
-    console.log('Adding animal failed! Error: ', e);
-    res.json("Adding animal failed!");
-  } 
-});
-
-app.post("/classes", async (req, res) => {
+app.post("/classes/add", async (req, res) => {
   try {
 
     // const classes = await classes_collection.find().toArray();
@@ -99,38 +72,66 @@ app.post("/classes", async (req, res) => {
 //
 // CRUD Update
 //
-app.get("/update/:id", async (req, res) => {
+app.post("/classes/update/:id", async (req, res) => {
 
   const ID = String(req.params.id);
 
+  let key;
+  let value;
+  if (req.body.instructor_name) {
+    key = 'instructor_name';
+    value = req.body.instructor_name;
+  } else if (req.body.exercise_type) {
+    key = 'exercise_type';
+    value = req.body.exercise_type;
+  } else if (req.body.intensity) {
+    key = 'intensity';
+    value = req.body.intensity;
+  } else if (req.body.location) {
+    key = 'location';
+    value = req.body.location;
+  } else if (req.body.duration) {
+    key = 'duration';
+    value = req.body.duration;
+  } else if (req.body.class_size) {
+    key = 'class_size';
+    value = req.body.class_size;
+  } else if (req.body.date) {
+    key = 'date';
+    value = req.body.date;
+  }
+
   try {
-    const result = await pets.updateOne({_id: mongodb.ObjectID(ID)}, {$set: {name: 'UPDATED-josh'}});
-    console.log('Updated animal');
+    // const result = await pets.updateOne({_id: mongodb.ObjectID(ID)}, {$set: {name: 'UPDATED-josh'}});
+    const result = await classes_collection.updateOne({ _id: mongodb.ObjectID(ID)}, { 
+      $set: { [key]: value}
+    });
+
+    console.log('Successfully updated class');
     res.json(result);
   } catch(e) { 
-    console.log('Updating animal failed! Error: ', e);
-    res.json("Updating animal failed!");
+    console.log('Updating class failed! Error: ', e);
+    res.json("Updating classfailed!");
   } 
 });
+// app.post("/classes/update/:id", async (req, res) => {
+
+//   const ID = String(req.params.id);
+
+//   try {
+//     const result = await pets.updateOne({_id: mongodb.ObjectID(ID)}, {$set: {name: 'UPDATED-josh'}});
+//     console.log('Updated animal');
+//     res.json(result);
+//   } catch(e) { 
+//     console.log('Updating animal failed! Error: ', e);
+//     res.json("Updating animal failed!");
+//   } 
+// });
 
 // ==============================================
 //
 // CRUD Delete
 //
-app.get("/delete/:id", async (req, res) => {
-
-  const ID = String(req.params.id);
-  console.log('id: ', ID);
-
-  try {
-    const result = await pets.deleteOne({_id: mongodb.ObjectID(ID)});
-    console.log('Deleted new animal');
-    res.json(result);
-  } catch(e) { 
-    console.log('Deleting animal failed! Error: ', e);
-    res.json("Deleting animal failed!");
-  } 
-});
 app.get("/classes/delete/:id", async (req, res) => {
 
   const ID = String(req.params.id);

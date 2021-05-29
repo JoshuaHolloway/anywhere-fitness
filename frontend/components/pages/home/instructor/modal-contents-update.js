@@ -35,35 +35,52 @@ const useStyles = makeStyles((theme) => ({
 
 // ==============================================
 
-export default function ModalContents({endpoint}) {
+export default function ModalContents({setOpen, card_selected, sessions, setSessions}) {
+
+  //---------------------------------------------
+
   const classes = useStyles();
+
+  //---------------------------------------------
 
   const onPost = (event) => {
     event.preventDefault();
-    console.log('posted');
+    console.log('onPost in modal-contents-update.js');
 
-    // TODO: Get the real ID from the form:
-    const ID = 0;
+    console.log('card_selected: ', card_selected);
+
+    const _id = sessions[card_selected]._id;
+    console.log('_id: ', _id);
+
     const formData = {
-      name: 'test',
-      instructor_name: 'test',
-      type: 'test',
-      intensity: 'test',
-      location: 'test', 
-      date: 'test', 
-      max_size: 'test', 
-      duration: 'test', 
-      signedUp: 'test'
+      instructor_name: input_val_1,
+      duration:        input_val_2, 
+      type:            input_val_3,
+      intensity:       input_val_4,
+      location:        input_val_5, 
+      class_size:      input_val_6, 
+      date:            '2003-01-02T06:00:00.000+00:0', 
+      students:        []
     };
 
-    axios.post(`https://anywhere-fitness-ptbw.herokuapp.com/api/auth/instructor/classes${ID}`, formData)
-         .then(res => {
-           console.log('response: ', res);
-
-         })
-         .catch(err => console.log(err));
+    axios.post(`http://localhost:4000/classes/update/${_id}`, formData)
+      .then((response) => {
+         
+          const newSessions = [];
+          for (let i = 0; i < sessions.length; ++i) {
+            if (sessions[i]._id == _id) {
+              newSessions[i] = formData;
+            } else {
+              newSessions[i] = sessions[i];
+            }
+          }
+          setSessions(newSessions);
+          setOpen(false);
+      });
   };
 
+
+  //---------------------------------------------
 
   // (1) instructor_name,     Text Input Field
   // (2) duration,            Slider
@@ -86,6 +103,7 @@ export default function ModalContents({endpoint}) {
   const handleInputVal5 = (e)         => { console.log('input_val_5: ', input_val_5); setInputVal5(e.target.value); }
   const handleInputVal6 = (e, newVal) => { console.log('input_val_6: ', input_val_6); setInputVal6(newVal);         }
 
+  //---------------------------------------------
 
   // TODO
   // -Logic to enable button once one of the form input fields are non-empty

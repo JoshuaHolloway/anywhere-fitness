@@ -36,7 +36,12 @@ const useStyles = makeStyles((theme) => ({
 // ==============================================
 
 export default function ModalContents({setOpen, sessions, setClasses}) {
+
+  //---------------------------------------------
+
   const classes = useStyles();
+
+  //---------------------------------------------
 
   const onPost = (event) => {
     event.preventDefault();
@@ -53,14 +58,15 @@ export default function ModalContents({setOpen, sessions, setClasses}) {
       students:        []
     };
 
-    axios.post('http://localhost:4000/classes', formData)
+    axios.post('http://localhost:4000/classes/add', formData)
       .then((response) => {
         const insertedId = response.data;
-        setClasses([...sessions, {...formData, _id: insertedId}])
+        setClasses([...sessions, {...formData, _id: insertedId}]);
         setOpen(false);
       });
   };
 
+  //---------------------------------------------
 
   // (1) instructor_name,     Text Input Field
   // (2) duration,            Slider
@@ -93,6 +99,7 @@ export default function ModalContents({setOpen, sessions, setClasses}) {
   } 
   const handleInputVal7 = (e)         => { console.log('input_val_7: ', input_val_7); setInputVal7(e.target.value); }
 
+  //---------------------------------------------
 
   return (
     <form className={classes.root} noValidate autoComplete="off" onSubmit={onPost}>

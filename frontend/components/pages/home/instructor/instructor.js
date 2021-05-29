@@ -84,7 +84,7 @@ const InstructorHomePage = ({setLoggedIn}) => {
           <Modal_AddClasses card_selected={card_selected} sessions={classes} setClasses={setClasses}/>
 
           {/* /api/auth/instructor/classes/:id	 */}
-          <Modal_UpdateClasses card_selected={card_selected} />
+          <Modal_UpdateClasses card_selected={card_selected} sessions={classes} setSessions={setClasses}/>
 
           {/* /api/auth/instructor/classes/:id */}
           <Modal_DeleteClasses card_selected={card_selected} sessions={classes} setSessions={setClasses}/>

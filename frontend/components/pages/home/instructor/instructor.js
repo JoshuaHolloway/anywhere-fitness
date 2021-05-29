@@ -6,6 +6,7 @@ import Modal_DeleteClasses from './modal-delete.js';
 import Button from '@material-ui/core/Button';
 
 import NestedGrid from './grid.js';
+import Card from './card.js';
 import axios from 'axios';
 
 // ==============================================
@@ -42,7 +43,9 @@ const InstructorHomePage = ({setLoggedIn}) => {
     
     axios.get('http://localhost:4000/classes')
           .then(response => {
+            const classes = response.data;
             console.log('response.data: ', response.data);
+            setClasses(classes);
           })
           .catch(error => console.log('error: ', error));
 
@@ -73,7 +76,10 @@ const InstructorHomePage = ({setLoggedIn}) => {
       
       </div>
     
-      <NestedGrid />
+      {/* <NestedGrid sessions={classes}/> */}
+      {classes.map((session) => {
+        return <Card session={session}/>;
+      })}
     </div>
   ); // return
 }; // InstructorHomePage

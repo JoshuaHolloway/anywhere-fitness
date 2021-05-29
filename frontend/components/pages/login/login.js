@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import { Grid, LinearProgress } from "@material-ui/core";
 import {buttonStyles, inputStyles} from '../../../global-styles/form-styles.js';
 
+import SimpleDialogDemo from './dialog.js';
+
 // ==============================================
 // ==============================================
 
@@ -50,18 +52,11 @@ const LoginPage = ({setLoggedIn, setRole}) => {
       "password":  form_values.password,
     };
 
+    // Display progress bar
     const register_link   = document.querySelector('#login__register-link');
     const progress_bar = document.querySelector('#register__LinearProgress');
     progress_bar.classList.remove('hide-visibility');
     register_link.classList.add('hide-visibility');
-
-    // axios.post('https://anywhere-fitness-ptbw.herokuapp.com/api/auth/login', formData)
-    //      .then(res => {
-    //        console.log('response: ', res);
-    //        setLoggedIn(true);
-    //        history.push('/');
-    //      })
-    //      .catch(err => console.log(err));
     
     axios.post("http://localhost:4000/login", formData)
       .then((response) => {
@@ -80,7 +75,11 @@ const LoginPage = ({setLoggedIn, setRole}) => {
           alert("Sorry, try again.");
         }
       })
-      .catch();
+      .catch(() => {
+        setOpen(true);
+        // alert('User not in database.  Please register!');
+        // history.push('/register');
+      });
     
     setFormValues(init_form);
   };
@@ -89,6 +88,10 @@ const LoginPage = ({setLoggedIn, setRole}) => {
 
   const buttonClasses = buttonStyles();
   const inputClasses = inputStyles();
+
+  // --------------------------------------------
+
+  const [open, setOpen] = React.useState(false);
 
   // --------------------------------------------
 
@@ -118,6 +121,8 @@ const LoginPage = ({setLoggedIn, setRole}) => {
         </div>
 
       </div>
+
+      <SimpleDialogDemo open={open} setOpen={setOpen}/>
     </form>
   ); // return 
 }; // LoginForm

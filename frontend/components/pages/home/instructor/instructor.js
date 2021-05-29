@@ -37,7 +37,8 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
-  const [classes, setClasses] = useState([]);
+  const [classes, setClasses]  = useState([]);
+  const [num_rows, setNumRows] = useState(1);
 
   // --------------------------------------------
 
@@ -51,7 +52,10 @@ const InstructorHomePage = ({setLoggedIn}) => {
           .then(response => {
             const classes = response.data;
             console.log('response.data: ', response.data);
+            const numRows = Math.ceil(classes.length / 3);
+            setNumRows(numRows);
             setClasses(classes);
+            console.log('classes.length: ', classes.length, 'Math.ceil(classes.length / 3): ', numRows ,' num_rows: ', num_rows, 'classes: ', classes);
           })
           .catch(error => console.log('error: ', error));
 
@@ -70,7 +74,7 @@ const InstructorHomePage = ({setLoggedIn}) => {
         <div className="card" style={{display: 'flex', justifyContent: 'space-evenly'}}>
 
           {/* /api/auth/instructor/classes */}
-          <Modal_AddClasses endpoint={'add'}/>
+          <Modal_AddClasses sessions={classes} setClasses={setClasses} />
 
           {/* /api/auth/instructor/classes/:id	 */}
           <Modal_UpdateClasses endpoint={'update'} />
@@ -83,9 +87,15 @@ const InstructorHomePage = ({setLoggedIn}) => {
       </div>
     
       {/* <NestedGrid sessions={classes}/> */}
-      {classes.map((session) => {
-        return <Card session={session} />;
-      })}
+      {/* <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}> */}
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
+        {classes.map((session) => {
+          return (
+            <Card key={session._id} session={session}/>
+          );
+        })}
+      </div>
+
     </div>
   ); // return
 }; // InstructorHomePage

@@ -23,7 +23,7 @@ import {buttonStylesOrange} from '../../../../global-styles/form-styles.js';
 // ==============================================
 // ==============================================
 
-const Modal_AddClasses = () => {
+const Modal_AddClasses = ({sessions, setClasses}) => {
 
   // --------------------------------------------
 
@@ -101,7 +101,7 @@ const Modal_AddClasses = () => {
             <h2 id="transition-modal-title">Add Class</h2>
             <p id="transition-modal-description">For Instructor</p>
 
-            <ModalContents />
+            <ModalContents setOpen={setOpen} sessions={sessions} setClasses={setClasses} />
 
           </div>
         </Fade>

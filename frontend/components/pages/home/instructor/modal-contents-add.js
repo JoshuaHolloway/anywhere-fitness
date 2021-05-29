@@ -35,41 +35,29 @@ const useStyles = makeStyles((theme) => ({
 
 // ==============================================
 
-export default function ModalContents({endpoint}) {
+export default function ModalContents({setOpen, sessions, setClasses}) {
   const classes = useStyles();
 
   const onPost = (event) => {
     event.preventDefault();
     console.log('posted');
 
-    // TODO: Get the real ID from the form:
-    const ID = 0;
     const formData = {
-      student_name: '',
-      signedUp: false,
-      instructor_name: 'jessica',
-      type: 'jogging',
-      intensity: 'medium',
-      location: 'nebraska', 
-      date: 'tomorow', 
-      max_size: '2', 
-      duration: '130', 
+      instructor_name: input_val_1,
+      duration:        input_val_2, 
+      type:            input_val_3,
+      intensity:       input_val_4,
+      location:        input_val_5, 
+      class_size:      input_val_6, 
+      date:            '2003-01-02T06:00:00.000+00:0', 
+      students:        []
     };
 
-    // axios.post(`https://anywhere-fitness-ptbw.herokuapp.com/api/auth/instructor/classes${ID}`, formData)
-    //      .then(res => {
-    //        console.log('response: ', res);
-
-    //      })
-    //      .catch(err => console.log(err));
-
-    axios.post('http://localhost:5000/api/classes', formData)
+    axios.post('http://localhost:4000/classes', formData)
       .then((response) => {
-        console.log(response.data);
-        // setUsers(response.data);
-        // TODO: Add list of classes to state array here!
-        // TODO: Add list of classes to state array here!
-        // TODO: Add list of classes to state array here!
+        const insertedId = response.data;
+        setClasses([...sessions, {...formData, _id: insertedId}])
+        setOpen(false);
       });
   };
 
@@ -82,18 +70,29 @@ export default function ModalContents({endpoint}) {
   // (6) max_size,            Slider
   // (7) date,                Calendar              (Start Time)
 
-  const [input_val_1, setInputVal1] = useState('');  // [input-field: Integer]    Instructor Name
+  const [input_val_1, setInputVal1] = useState(''); // [input-field: Integer]    Instructor Name
   const [input_val_2, setInputVal2] = useState(0);  // [slider:      Integer]    Class Duration
   const [input_val_3, setInputVal3] = useState(''); // [dropdown:    String]     Class Type
   const [input_val_4, setInputVal4] = useState(''); // [dropdown:    String]     Class Intensity
   const [input_val_5, setInputVal5] = useState(''); // [dropdown:    String]     Class Location
   const [input_val_6, setInputVal6] = useState(0);  // [slider:      Integer]    Class Size
+  const [input_val_7, setInputVal7] = useState(''); // [calendar:    Integer]    Date
   const handleInputVal1 = (e)         => { console.log('input_val_1: ', input_val_1); setInputVal1(e.target.value); }
   const handleInputVal2 = (e, newVal) => { console.log('input_val_2: ', input_val_2); setInputVal2(newVal);         }
-  const handleInputVal3 = (e)         => { console.log('input_val_3: ', input_val_3); setInputVal3(e.target.value); }
+  const handleInputVal3 = (e)         => {
+    console.log('e.target.value: ', e.target.value);
+    setInputVal3(e.target.value); 
+    console.log('input_val_3: ', input_val_3); 
+  }
   const handleInputVal4 = (e)         => { console.log('input_val_4: ', input_val_4); setInputVal4(e.target.value); }
   const handleInputVal5 = (e)         => { console.log('input_val_5: ', input_val_5); setInputVal5(e.target.value); }
-  const handleInputVal6 = (e, newVal) => { console.log('input_val_6: ', input_val_6); setInputVal6(newVal);         }
+  const handleInputVal6 = (e, newVal) => { 
+    console.log('e.target.value: ', e.target.value, 'newVal: ', newVal);
+    setInputVal6(newVal);         
+    console.log('input_val_6: ', input_val_6);
+  } 
+  const handleInputVal7 = (e)         => { console.log('input_val_7: ', input_val_7); setInputVal7(e.target.value); }
+
 
   return (
     <form className={classes.root} noValidate autoComplete="off" onSubmit={onPost}>
@@ -189,9 +188,9 @@ export default function ModalContents({endpoint}) {
             <Grid item>{input_val_6}</Grid>
           </Grid>
         </div>
+          
           {/* <MaterialUIPickers /> */}
           <DateAndTimePickers />
-
 
         <div>
           <Button variant="contained" type="submit">

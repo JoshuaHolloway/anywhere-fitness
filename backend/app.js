@@ -49,7 +49,7 @@ app.get("/classes", async (req, res) => {
     res.status(200).json(classes);
   } catch (err) {
     console.log(err);
-    res.status(400).json("Try again later.");
+    res.status(400).json("Getting classes fron db failed");
   }
 });
 
@@ -65,6 +65,30 @@ app.get("/create", async (req, res) => {
     console.log('Adding animal failed! Error: ', e);
     res.json("Adding animal failed!");
   } 
+});
+
+app.post("/classes", async (req, res) => {
+  try {
+
+    // const classes = await classes_collection.find().toArray();
+    const result = await classes_collection.insertOne({
+      instructor_name: req.body.instructor_name, 
+      exercise_type: req.body.exercise_type, 
+      intensity: req.body.intensity,
+      location: req.body.location,
+      duration: req.body.duration,
+      class_size: req.body.class_size,
+      date: req.body.date
+    });
+
+    console.log('/classes :: result.insertedId: ', result.insertedId);
+
+    const id = result.insertedId;
+    res.status(200).json(id);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Adding class to db failed");
+  }
 });
 
 // ==============================================

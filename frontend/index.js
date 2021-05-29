@@ -36,8 +36,8 @@ const App = () => {
 
   // --------------------------------------------
 
-  const [logged_in, setLoggedIn] = useState(false);
-  const [role, setRole] = useState('');
+  const [logged_in, setLoggedIn] = useState(true);
+  const [role, setRole] = useState('instructor');
 
   // --------------------------------------------
 

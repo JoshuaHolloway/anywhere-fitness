@@ -44,43 +44,26 @@ const LoginPage = ({setLoggedIn, setRole}) => {
 
   const history = useHistory();
   const onPost = (event) => {
-    console.log('onPost() in login form component');
     event.preventDefault();
 
+    // Display progress bar
+    document.querySelector('#login__register-link').classList.remove('hide-visibility');
+    document.querySelector('#register__LinearProgress').classList.add('hide-visibility');
+    
     const formData = {
       "username":  form_values.username,
       "password":  form_values.password,
     };
-
-    // Display progress bar
-    const register_link   = document.querySelector('#login__register-link');
-    const progress_bar = document.querySelector('#register__LinearProgress');
-    progress_bar.classList.remove('hide-visibility');
-    register_link.classList.add('hide-visibility');
-    
     axios.post("http://localhost:4000/login", formData)
       .then((response) => {
         if (response.data.status == "success") {
-          console.log('successful response from logging in');
-          console.log('response: ', response);
-
           localStorage.setItem("ourToken", response.data.token);
-
-          // Do this in 'fulfilled' .then() callback for above Promise resulting from POST request to API-URL/api/auth/login:
           setLoggedIn(true);
           setRole(response.data.role);
           history.push('/');
-
-        } else {
-          alert("Sorry, try again.");
-        }
+        } else { alert("Sorry, try again.") }
       })
-      .catch(() => {
-        setOpen(true);
-        // alert('User not in database.  Please register!');
-        // history.push('/register');
-      });
-    
+      .catch(() => setOpen(true) );
     setFormValues(init_form);
   };
 

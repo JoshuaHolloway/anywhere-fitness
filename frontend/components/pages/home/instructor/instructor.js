@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Modal_AddClasses from './modal-add.js';
 import Modal_UpdateClasses from './modal-update.js';
 import Modal_DeleteClasses from './modal-delete.js';
 import Button from '@material-ui/core/Button';
+
+import NestedGrid from './grid.js';
+import axios from 'axios';
 
 // ==============================================
 // ==============================================
@@ -31,6 +34,22 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
+  const [classes, setClasses] = useState([]);
+
+  // --------------------------------------------
+
+  useEffect(() => {
+    
+    axios.get('http://localhost:4000/classes')
+          .then(response => {
+            console.log('response.data: ', response.data);
+          })
+          .catch(error => console.log('error: ', error));
+
+  }, []);
+
+  // --------------------------------------------
+
   return (
     <div className="homepage homepage-client">
       <div className="container" style={{position: 'relative'}}>
@@ -53,6 +72,8 @@ const InstructorHomePage = ({setLoggedIn}) => {
         </div>
       
       </div>
+    
+      <NestedGrid />
     </div>
   ); // return
 }; // InstructorHomePage

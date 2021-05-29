@@ -22,8 +22,9 @@ const saltRounds = 10;
 
 // ==============================================
 
-const pets = client.db("JoshTestDB").collection("pets");
-const users_collection = client.db("JoshTestDB").collection("users");
+const pets               = client.db("JoshTestDB").collection("pets");
+const users_collection   = client.db("JoshTestDB").collection("users");
+const classes_collection = client.db("JoshTestDB").collection("classes");
 
 // ==============================================
 // CRUD Read
@@ -38,6 +39,17 @@ app.get("/read", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.json("Try again later.");
+  }
+});
+
+app.get("/classes", async (req, res) => {
+  try {
+    const classes = await classes_collection.find().toArray();
+    console.log('classes: ', classes);
+    res.status(200).json(classes);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json("Try again later.");
   }
 });
 

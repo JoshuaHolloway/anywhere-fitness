@@ -1,7 +1,9 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import Modal_AddClasses from './modal-add.js';
 import Modal_UpdateClasses from './modal-update.js';
 import Modal_DeleteClasses from './modal-delete.js';
+import Button from '@material-ui/core/Button';
 
 // ==============================================
 // ==============================================
@@ -20,12 +22,22 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
+  const history = useHistory();
+  const logout = () => {
+    localStorage.removeItem("ourToken");
+    setLoggedIn(false);
+    history.push('/');
+  };
+
+  // --------------------------------------------
+
   return (
     <div className="homepage homepage-client">
       <div className="container" style={{position: 'relative'}}>
         <div style={{position: 'absolute', display: 'grid', placeItems: 'center', top: '0', width: '100%', height: '200px'}}>
           <h3 >Instructor Home Page</h3>
         </div>
+        <Button variant="outlined" color="secondary" onClick={logout}>Log Out</Button>
 
         <div className="card" style={{display: 'flex', justifyContent: 'space-evenly'}}>
 

@@ -99,28 +99,28 @@ const ClientHomePage = ({setLoggedIn}) => {
 
         {/* - - - - - - - - - - - - - - - - - - */}
         <div className="card">
-          <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => {
+          <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => 
+            {
 
-            // // -Orlando TODO (1/6): Drop API-call here
-            // // --get all classes          GET     /api/auth/users/classes            N/A              N/A                Fetches all the classes from the database
-            // const endpoint = '/api/auth/users/classes';
-            // axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-            //     .then(res => console.log('response: ', res))
-            //     .catch(err => console.log(err));
+              // // -Orlando TODO (1/6): Drop API-call here
+              // // --get all classes          GET     /api/auth/users/classes            N/A              N/A                Fetches all the classes from the database
+              // const endpoint = '/api/auth/users/classes';
+              // axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
+              //     .then(res => console.log('response: ', res))
+              //     .catch(err => console.log(err));
 
 
-            const id = 0;
-            axios
-              .get(`http://localhost:5000/api/movies/${id}`) // Study this endpoint with Postman
-              .then(response => {
-                // Set the response data as the 'movieList' slice of state
-                const {data: movie} = response;
-                console.log('movie: ', movie);
-                setMovie(movie);
-              })
-              .catch(error => {
-                console.error('Server Error', error);
-              });
+              const id = 0;
+              axios.get(`http://localhost:5000/api/movies/${id}`) // Study this endpoint with Postman
+                   .then(response => {
+                     // Set the response data as the 'movieList' slice of state
+                     const {data: movie} = response;
+                     console.log('movie: ', movie);
+                     setMovie(movie);
+                   })
+                   .catch(error => {
+                     console.error('Server Error', error);
+                   });
             }}
           >
             Get All Classes

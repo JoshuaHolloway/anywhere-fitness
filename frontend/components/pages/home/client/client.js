@@ -21,6 +21,8 @@ import Accordian_GetAllClasses from './1-GetAllClassesAccordian.js';
 
 import ControlledAccordions from './accordian-controlled-1.js';
 
+import {buttonStylesLogout} from '../../../../global-styles/form-styles.js';
+
 // ==============================================
 // ==============================================
 
@@ -90,12 +92,15 @@ const ClientHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
-  return (
-    <div className="homepage homepage-client">
+  const buttonStyleLogout = buttonStylesLogout();
 
+  // --------------------------------------------
+
+  return (
+    <div className="homepage homepage-client" style={{position: 'relative'}}>
+      <Button variant="outlined" color="secondary" onClick={logout} className={buttonStyleLogout.root}>Log Out</Button>
       <div className="container">
         <h1>Client Home Page</h1>
-        <Button variant="outlined" color="secondary" onClick={logout}>Log Out</Button>
 
         {/* - - - - - - - - - - - - - - - - - - */}
         <div className="card">

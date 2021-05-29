@@ -37,7 +37,7 @@ const App = () => {
   // --------------------------------------------
 
   const [logged_in, setLoggedIn] = useState(true);
-  const [role, setRole] = useState('instructor');
+  const [role, setRole] = useState('client');
 
   // --------------------------------------------
 

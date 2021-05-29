@@ -16,7 +16,7 @@ import Modal_DeleteClasses from './modal-delete.js';
 // ==============================================
 // ==============================================
 
-const InstructorHomePage = () => {
+const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 

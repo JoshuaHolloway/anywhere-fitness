@@ -107,10 +107,10 @@ app.post("/register", async (req, res) => {
         try {
           const result = await users_collection.insertOne({name, username, email, password: hash, role});
           console.log('Added new user');
-          res.json(result);
+          res.status(201).json(result);
         } catch(e) { 
           console.log('Adding user failed! Error: ', e);
-          res.json("Adding user failed!");
+          res.status(400).json("Adding user failed!");
         } 
     });
   });
@@ -142,19 +142,19 @@ app.post("/login", async (req, res) => {
 
         if (result == true) {
           const token = jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret);
-          res.json({ status: "success", token: token, role: user.role });
+          res.status(200).json({ status: "success", token: token, role: user.role });
         } else {
-          res.json({ status: "failure" });
+          res.status(400).json({ status: "failure" });
         } // if (result == true)
       });
 
     } else { // if (users > 0)
-      res.json({ status: "username not in database" });
+      res.status(400).json({ status: "username not in database" });
     }
 
   } catch (err) {
     console.log(err);
-    res.json("No user named ");
+    res.status(400).json("No user with that name");
   }
 
 });
@@ -169,10 +169,10 @@ app.post("/topsecret", (req, res) => {
   jwt.verify(token, jwtsecret, function (err, decoded) {
     
     if (err) {
-      res.json({ status: "failure" });
+      res.status(400).json({ status: "failure" });
     } 
     else {
-      res.json({ status: "success", message: `Hello ${decoded.name} your favorite color is ${decoded.favColor} and we can tell you the secret info that the sky is blue.` });
+      res.status(200).json({ status: "success", message: `Hello ${decoded.name} your favorite color is ${decoded.favColor} and we can tell you the secret info that the sky is blue.` });
     }
   })
 });

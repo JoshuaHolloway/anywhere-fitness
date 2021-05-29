@@ -35,7 +35,7 @@ import {buttonStylesGreen} from '../../../../global-styles/form-styles.js';
 // ==============================================
 // ==============================================
 
-const Modal_UpdateClasses = () => {
+const Modal_UpdateClasses = ({card_selected}) => {
 
   // --------------------------------------------
 
@@ -90,7 +90,7 @@ const Modal_UpdateClasses = () => {
 
     <div>
 
-      <Button variant='contained' onClick={handleOpen} className={buttonClasses.root}>
+      <Button disabled={card_selected ? false: true} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
         Update Class
       </Button>
 

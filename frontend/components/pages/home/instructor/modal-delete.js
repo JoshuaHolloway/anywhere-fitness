@@ -35,7 +35,7 @@ import {buttonStylesPurple} from '../../../../global-styles/form-styles.js';
 // ==============================================
 // ==============================================
 
-const Modal_DeleteClasses = () => {
+const Modal_DeleteClasses = ({card_selected}) => {
 
   // --------------------------------------------
 
@@ -89,7 +89,7 @@ const Modal_DeleteClasses = () => {
   return (
 
     <div>
-      <Button variant='contained' onClick={handleOpen} className={buttonClasses.root}>
+      <Button disabled={card_selected ? false: true} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
         Delete Class
       </Button>
 

@@ -37,8 +37,9 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
-  const [classes, setClasses]  = useState([]);
-  const [num_rows, setNumRows] = useState(1);
+  const [classes, setClasses]            = useState([]);
+  const [num_rows, setNumRows]           = useState(1);
+  const [card_selected, setCardSelected] = useState(null);
 
   // --------------------------------------------
 
@@ -63,6 +64,12 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
+  useEffect(() => {
+
+  }, [card_selected]);
+
+  // --------------------------------------------
+
   return (
     <div className="homepage homepage-client" style={{position: 'relative'}}>
       <Button variant="outlined" color="secondary" onClick={logout} className={buttonStyleLogout.root}>Log Out</Button>
@@ -74,13 +81,13 @@ const InstructorHomePage = ({setLoggedIn}) => {
         <div className="card" style={{display: 'flex', justifyContent: 'space-evenly'}}>
 
           {/* /api/auth/instructor/classes */}
-          <Modal_AddClasses sessions={classes} setClasses={setClasses} />
+          <Modal_AddClasses card_selected={card_selected} sessions={classes} setClasses={setClasses} />
 
           {/* /api/auth/instructor/classes/:id	 */}
-          <Modal_UpdateClasses endpoint={'update'} />
+          <Modal_UpdateClasses card_selected={card_selected} />
 
           {/* /api/auth/instructor/classes/:id */}
-          <Modal_DeleteClasses endpoint={'delete'}/>
+          <Modal_DeleteClasses card_selected={card_selected}/>
 
         </div>
       
@@ -89,9 +96,12 @@ const InstructorHomePage = ({setLoggedIn}) => {
       {/* <NestedGrid sessions={classes}/> */}
       {/* <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}> */}
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
-        {classes.map((session) => {
+        {classes.map((session, idx) => {
+
+          let is_selected = (card_selected == idx) ? true : false;
+
           return (
-            <Card key={session._id} session={session}/>
+            <Card key={session._id} session={session} is_selected={is_selected} card_selected={card_selected} setCardSelected={setCardSelected} idx={idx} />
           );
         })}
       </div>

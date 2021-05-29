@@ -76,6 +76,28 @@ const buttonStylesPurple = makeStyles(() => ({
   },
 }));
 
+const buttonStylesLogout = makeStyles(() => ({
+  root: {
+    position: 'absolute',
+    top: '10px',
+    left: '10px',
+    padding: '0 30px',
+    height: '60px',
+    // width: '100%',
+    borderRadius: '5px',
+    // border: 'none',
+    color: 'var(--text-secondary)',
+    // color: 'var(--text-primary)',
+    // background: 'linear-gradient(90deg, var(--gradient-purple-starting), var(--gradient-purple-ending))',
+    transition: 'all 0.3s ease',
+    '&:hover': { 
+      boxShadow: 'var(--hover-shadow)',
+      transform: 'scaleX(1.01) scaleY(1.01)',
+      color: 'var(--text-secondary)'
+    }
+  },
+}));
+
 // ==============================================
 
 const inputStyles = makeStyles({
@@ -92,4 +114,4 @@ const inputStyles = makeStyles({
 
 // ==============================================
 
-export {buttonStyles, buttonStylesOrange, buttonStylesGreen, buttonStylesPurple, inputStyles};
+export {buttonStyles, buttonStylesOrange, buttonStylesGreen, buttonStylesPurple, inputStyles, buttonStylesLogout};

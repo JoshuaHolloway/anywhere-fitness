@@ -9,6 +9,8 @@ import NestedGrid from './grid.js';
 import Card from './card.js';
 import axios from 'axios';
 
+import {buttonStylesLogout} from '../../../../global-styles/form-styles.js';
+
 // ==============================================
 // ==============================================
 
@@ -39,6 +41,10 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
+  const buttonStyleLogout = buttonStylesLogout();
+
+  // --------------------------------------------
+
   useEffect(() => {
     
     axios.get('http://localhost:4000/classes')
@@ -54,12 +60,12 @@ const InstructorHomePage = ({setLoggedIn}) => {
   // --------------------------------------------
 
   return (
-    <div className="homepage homepage-client">
+    <div className="homepage homepage-client" style={{position: 'relative'}}>
+      <Button variant="outlined" color="secondary" onClick={logout} className={buttonStyleLogout.root}>Log Out</Button>
       <div className="container" style={{position: 'relative'}}>
-        <div style={{position: 'absolute', display: 'grid', placeItems: 'center', top: '0', width: '100%', height: '200px'}}>
+        <div style={{display: 'grid', placeItems: 'center', width: '100%', height: '100px', border: 'solid red 0px'}}>
           <h3 >Instructor Home Page</h3>
         </div>
-        <Button variant="outlined" color="secondary" onClick={logout}>Log Out</Button>
 
         <div className="card" style={{display: 'flex', justifyContent: 'space-evenly'}}>
 
@@ -78,7 +84,7 @@ const InstructorHomePage = ({setLoggedIn}) => {
     
       {/* <NestedGrid sessions={classes}/> */}
       {classes.map((session) => {
-        return <Card session={session}/>;
+        return <Card session={session} />;
       })}
     </div>
   ); // return

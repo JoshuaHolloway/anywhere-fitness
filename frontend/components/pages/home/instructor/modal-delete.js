@@ -1,26 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Slider from '@material-ui/core/Slider';
-
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-
-import ModalContents from './modal-contents-delete.js';
-
 import {buttonStylesPurple} from '../../../../global-styles/form-styles.js';
 
 // ==============================================
@@ -35,7 +16,7 @@ import {buttonStylesPurple} from '../../../../global-styles/form-styles.js';
 // ==============================================
 // ==============================================
 
-const Modal_DeleteClasses = ({card_selected}) => {
+const Modal_DeleteClasses = ({card_selected, sessions, setSessions}) => {
 
   // --------------------------------------------
 
@@ -78,6 +59,24 @@ const Modal_DeleteClasses = ({card_selected}) => {
 
   const handleOpen = () => {
     setOpen(true);
+
+    const _id = sessions[card_selected]._id;
+    console.log('_id: ', _id);
+
+    axios.get(`http://localhost:4000/classes/delete/${_id}`)
+        .then( () => {
+          console.log(`successful deletion of class ${_id}`);
+
+          // Update classes rendered to screen...
+          const filtered = sessions.filter((session, idx) => {
+            console.log('session._id: ', session._id, ',  _id: ', _id);
+            return session._id != _id;
+          });
+          
+          console.log('filtered: ', filtered);
+          setSessions([...filtered]);
+        })
+        .catch((e) => console.log('error during deleting class from database, error: ', e));
   };
 
   const handleClose = () => {
@@ -89,31 +88,9 @@ const Modal_DeleteClasses = ({card_selected}) => {
   return (
 
     <div>
-      <Button disabled={card_selected ? false: true} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
+      <Button disabled={card_selected > -1 ? false : true} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
         Delete Class
       </Button>
-
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Delete Class</h2>
-            <p id="transition-modal-description">For Instructor</p>
-
-            <ModalContents />
-          </div>
-        </Fade>
-      </Modal>
     </div>
 
   ); // return

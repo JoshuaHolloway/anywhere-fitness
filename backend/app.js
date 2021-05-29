@@ -27,7 +27,9 @@ const users_collection   = client.db("JoshTestDB").collection("users");
 const classes_collection = client.db("JoshTestDB").collection("classes");
 
 // ==============================================
+//
 // CRUD Read
+//
 app.get("/read", async (req, res) => {
   try {
     const dogs = await db.collection("pets").find({ species: "dog" }).toArray();
@@ -49,12 +51,14 @@ app.get("/classes", async (req, res) => {
     res.status(200).json(classes);
   } catch (err) {
     console.log(err);
-    res.status(400).json("Getting classes fron db failed");
+    res.status(400).json("Getting classes from db failed");
   }
 });
 
 // ==============================================
+//
 // CRUD Create
+//
 app.get("/create", async (req, res) => {
   try {
     const result = await pets.insertOne({name: 'alen', species: 'dog', age: 7});
@@ -92,8 +96,9 @@ app.post("/classes", async (req, res) => {
 });
 
 // ==============================================
-
+//
 // CRUD Update
+//
 app.get("/update/:id", async (req, res) => {
 
   const ID = String(req.params.id);
@@ -109,8 +114,9 @@ app.get("/update/:id", async (req, res) => {
 });
 
 // ==============================================
-
+//
 // CRUD Delete
+//
 app.get("/delete/:id", async (req, res) => {
 
   const ID = String(req.params.id);
@@ -125,9 +131,26 @@ app.get("/delete/:id", async (req, res) => {
     res.json("Deleting animal failed!");
   } 
 });
+app.get("/classes/delete/:id", async (req, res) => {
+
+  const ID = String(req.params.id);
+  console.log('id: ', ID);
+
+  try {
+    const result = await classes_collection.deleteOne({_id: mongodb.ObjectID(ID)});
+    console.log('Deleted class, result: ', result);
+    res.status(200).json(result);
+  } catch(e) { 
+    console.log('Deleting animal failed! Error: ', e);
+    res.status(400).json("Deleting animal failed!");
+  } 
+});
+
 
 // ==============================================
+//
 // Register
+//
 app.post("/register", async (req, res) => {
 
   const name = req.body.name;
@@ -155,7 +178,9 @@ app.post("/register", async (req, res) => {
 });
 
 // ==============================================
+//
 // Login
+//
 app.post("/login", async (req, res) => {
 
   try {

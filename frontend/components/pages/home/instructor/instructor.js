@@ -39,7 +39,7 @@ const InstructorHomePage = ({setLoggedIn}) => {
 
   const [classes, setClasses]            = useState([]);
   const [num_rows, setNumRows]           = useState(1);
-  const [card_selected, setCardSelected] = useState(null);
+  const [card_selected, setCardSelected] = useState(-1);
 
   // --------------------------------------------
 
@@ -81,13 +81,13 @@ const InstructorHomePage = ({setLoggedIn}) => {
         <div className="card" style={{display: 'flex', justifyContent: 'space-evenly'}}>
 
           {/* /api/auth/instructor/classes */}
-          <Modal_AddClasses card_selected={card_selected} sessions={classes} setClasses={setClasses} />
+          <Modal_AddClasses card_selected={card_selected} sessions={classes} setClasses={setClasses}/>
 
           {/* /api/auth/instructor/classes/:id	 */}
           <Modal_UpdateClasses card_selected={card_selected} />
 
           {/* /api/auth/instructor/classes/:id */}
-          <Modal_DeleteClasses card_selected={card_selected}/>
+          <Modal_DeleteClasses card_selected={card_selected} sessions={classes} setSessions={setClasses}/>
 
         </div>
       
@@ -97,11 +97,8 @@ const InstructorHomePage = ({setLoggedIn}) => {
       {/* <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}> */}
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
         {classes.map((session, idx) => {
-
-          let is_selected = (card_selected == idx) ? true : false;
-
           return (
-            <Card key={session._id} session={session} is_selected={is_selected} card_selected={card_selected} setCardSelected={setCardSelected} idx={idx} />
+            <Card key={session._id} session={session} card_selected={card_selected} setCardSelected={setCardSelected} idx={idx} />
           );
         })}
       </div>

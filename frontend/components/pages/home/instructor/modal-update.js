@@ -90,7 +90,7 @@ const Modal_UpdateClasses = ({card_selected}) => {
 
     <div>
 
-      <Button disabled={card_selected ? false: true} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
+      <Button disabled={card_selected > -1 ? false : true} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
         Update Class
       </Button>
 

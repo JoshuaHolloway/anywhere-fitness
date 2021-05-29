@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 
 // ==============================================
 
-export default function SimpleCard({session, idx, card_selected, setCardSelected, is_selected}) {
+export default function SimpleCard({session, idx, card_selected, setCardSelected}) {
   const classes = useStyles();
   // --------------------------------------------
 
@@ -41,7 +41,7 @@ export default function SimpleCard({session, idx, card_selected, setCardSelected
   useEffect(() => {
 
     const elem = inputRef.current;
-    console.log('card.js, elem: ', elem);
+    // console.log('card.js, elem: ', elem);
 
     if (card_selected == idx)
       gsap.to(elem, {scale: 1.2, duration: 0.5});
@@ -55,13 +55,7 @@ export default function SimpleCard({session, idx, card_selected, setCardSelected
   const onClick = () => {
     console.log('clicked card #: ', idx);
     setCardSelected(idx);
-
-    console.log('idx: ', idx);
-    console.log('card_selected: ', card_selected);
-
-    const elem = inputRef.current;
-    console.log('card.js, elem: ', elem);
-    gsap.to(elem, {scale: 1.2, duration: 0.5});
+    // console.log('card_selected: ', card_selected);
   };
 
   // --------------------------------------------

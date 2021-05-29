@@ -23,7 +23,7 @@ import {buttonStylesOrange} from '../../../../global-styles/form-styles.js';
 // ==============================================
 // ==============================================
 
-const Modal_AddClasses = ({sessions, setClasses}) => {
+const Modal_AddClasses = ({sessions, setClasses, card_selected}) => {
 
   // --------------------------------------------
 
@@ -80,7 +80,7 @@ const Modal_AddClasses = ({sessions, setClasses}) => {
   return (
 
     <div>
-      <Button variant='contained' onClick={handleOpen} className={buttonClasses.root}>
+      <Button disabled={card_selected > -1 ? true : false} variant='contained' onClick={handleOpen} className={buttonClasses.root}>
         Add Class
       </Button>
 

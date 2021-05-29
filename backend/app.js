@@ -4,9 +4,11 @@ const client = require("./db.js");
 const db = client.db();
 const mongodb = require('mongodb');
 
-// You should actually store your JWT secret in your .env file - but to keep this example as simple as possible...
+const dotenv = require("dotenv");
+dotenv.config();
+
 const jwt = require("jsonwebtoken");
-const jwtsecret = "the most secret string of text in history";
+const jwtsecret = process.env.JWT_SECRET;
 
 const cors = require('cors');
 

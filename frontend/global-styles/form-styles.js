@@ -80,6 +80,7 @@ const buttonStylesPurple = makeStyles(() => ({
 
 const inputStyles = makeStyles({
   root: {
+    '& .MuiInputBase-input': {color: 'white'},
     '& .MuiInput-underline::before': {
       borderBottom: '2px solid var(--translucent-primary)',
     },

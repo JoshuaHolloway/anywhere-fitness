@@ -80,10 +80,12 @@ const ClientHomePage = ({setLoggedIn}) => {
   const [accordian_state_2, setAccordianState2]     = useState(false); // id
   const [accordian_state_3, setAccordianState3]     = useState(false); // location
   const [accordian_state_4, setAccordianState4]     = useState(false); // intensity
+  const [accordian_state_5, setAccordianState5]     = useState(false); // duration
   const [sessions, setSessions]                     = useState([]);
   const [sessions_id, setSessions_id]               = useState([]);
   const [sessions_loc, setSessions_loc]             = useState([]);
   const [sessions_intensity, setSessions_intensity] = useState([]);
+  const [sessions_duration, setSessions_duration]   = useState([]);
   const [num_rows, setNumRows]                      = useState(1);
 
   // --------------------------------------------
@@ -276,12 +278,15 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" onClick={() => {
 
+            setAccordianState5(true);
+
             const duration = input_val_2; // slider
 
             // Client API-Call (5/6): Get specific class by duration
             axios.get(`http://localhost:4000/classes/duration/${duration}`)
                 .then(response => {
                   console.log('response.data: ', response.data);
+                  setSessions_duration(response.data);
                 })
                 .catch(error => console.log('error: ', error));
             }}
@@ -289,6 +294,8 @@ const ClientHomePage = ({setLoggedIn}) => {
           >
             Get Classes by Duration
           </Button>
+
+          <ControlledAccordions sessions={sessions_duration} num_rows={num_rows} accordian_state_1={accordian_state_5} />
         </div>
         
         {/* - - - - - - - - - - - - - - - - - - */}

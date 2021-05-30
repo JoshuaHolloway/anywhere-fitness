@@ -79,6 +79,7 @@ const ClientHomePage = ({setLoggedIn}) => {
   const [accordian_state_1, setAccordianState1] = useState(false);
   const [sessions, setSessions]                 = useState([]);
   const [num_rows, setNumRows]                  = useState(1);
+  const [josh, setJosh]                         = useState(0);
 
   // --------------------------------------------
 
@@ -120,6 +121,7 @@ const ClientHomePage = ({setLoggedIn}) => {
                       const numRows = Math.ceil(classes.length / 3);
                       setNumRows(numRows);
                       setSessions(sessions);
+                      setJosh(sessions[0]._id);
                       console.log('sessions.length: ', sessions.length, 'Math.ceil(sessions.length / 3): ', numRows ,' num_rows: ', num_rows);
                     })
                     .catch(error => console.log('error: ', error));
@@ -127,8 +129,8 @@ const ClientHomePage = ({setLoggedIn}) => {
           >
             Get All Classes
           </Button>
-
-          <ControlledAccordions accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
+          
+          <ControlledAccordions josh={josh} sessions={sessions} num_rows={num_rows} accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
           
         </div>
         {/* - - - - - - - - - - - - - - - - - - */}

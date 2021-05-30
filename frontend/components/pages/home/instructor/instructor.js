@@ -5,7 +5,7 @@ import Modal_UpdateClasses from './modal-update.js';
 import Modal_DeleteClasses from './modal-delete.js';
 import Button from '@material-ui/core/Button';
 
-import NestedGrid from './grid.js';
+// import NestedGrid from './grid.js';
 import Card from './card.js';
 import axios from 'axios';
 
@@ -96,7 +96,7 @@ const InstructorHomePage = ({setLoggedIn}) => {
       {/* <NestedGrid sessions={classes}/> */}
       {/* <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}> */}
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
-        {classes.map((session, idx) => {
+        {classes && classes.map((session, idx) => {
           return (
             <Card key={session._id} session={session} card_selected={card_selected} setCardSelected={setCardSelected} idx={idx} />
           );

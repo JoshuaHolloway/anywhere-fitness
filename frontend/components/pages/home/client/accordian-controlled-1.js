@@ -6,6 +6,8 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Card from './card.js';
+
 // ==============================================
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ==============================================
 
-export default function ControlledAccordions({accordian_state_1, setAccordianState1}) {
+export default function ControlledAccordions({josh, sessions, num_rows, accordian_state_1, setAccordianState1}) {
 
   // --------------------------------------------
 
@@ -34,29 +36,25 @@ export default function ControlledAccordions({accordian_state_1, setAccordianSta
   // --------------------------------------------
 
   return (
-    <div style={{border: "dashed hotpink 2px"}}>
+    <div className={classes.root}>
 
 
-      <div className={classes.root}>
-      
-        <Accordion expanded={accordian_state_1}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography className={classes.heading}>General settings</Typography>
-            <Typography className={classes.secondaryHeading}>I am an accordion</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-              maximus est, id dignissim quam.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      
-      </div>
+      <Accordion expanded={accordian_state_1}>
+
+        <AccordionDetails>
+
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
+            {sessions && sessions.map((session, idx) => {
+              return (
+                <Card key={session._id} session={session} />
+              );
+            })}
+          </div>
+
+
+        </AccordionDetails>
+      </Accordion>
+    
     </div>
   );
 }

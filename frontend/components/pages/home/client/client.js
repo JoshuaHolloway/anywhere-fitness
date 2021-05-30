@@ -225,7 +225,7 @@ const ClientHomePage = ({setLoggedIn}) => {
 
             const intensity = input_val_5; // dropdown
 
-            // Client API-Call (2/6): Get specific class
+            // Client API-Call (4/6): Get specific class by intensity
             axios.get(`http://localhost:4000/classes/intensity/${intensity}`)
                 .then(response => {
                   console.log('response.data: ', response.data);
@@ -258,12 +258,12 @@ const ClientHomePage = ({setLoggedIn}) => {
 
             const duration = input_val_2; // slider
 
-            // -Orlando TODO (5/6): Drop API-call here
-            // get classes by duration  GET     /api/auth/users/classes/duration   duration         N/A                Gets all the class of that duration. Has to be double.
-            const endpoint = `/api/auth/users/classes/${duration}`;
-            axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-                .then(res => console.log('response: ', res))
-                .catch(err => console.log(err));
+            // Client API-Call (5/6): Get specific class by duration
+            axios.get(`http://localhost:4000/classes/duration/${duration}`)
+                .then(response => {
+                  console.log('response.data: ', response.data);
+                })
+                .catch(error => console.log('error: ', error));
             }}
             disabled={initially_disable(input_val_2)}
           >

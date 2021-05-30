@@ -77,9 +77,10 @@ const ClientHomePage = ({setLoggedIn}) => {
   // --------------------------------------------
 
   const [accordian_state_1, setAccordianState1] = useState(false);
+  const [accordian_state_2, setAccordianState2] = useState(false);
   const [sessions, setSessions]                 = useState([]);
+  const [sessions_id, setSessions_id]           = useState([]);
   const [num_rows, setNumRows]                  = useState(1);
-  const [josh, setJosh]                         = useState(0);
 
   // --------------------------------------------
 
@@ -128,7 +129,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             Get All Classes
           </Button>
 
-          <ControlledAccordions josh={josh} sessions={sessions} num_rows={num_rows} accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
+          <ControlledAccordions sessions={sessions} num_rows={num_rows} accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
           
         </div>
         {/* - - - - - - - - - - - - - - - - - - */}
@@ -147,6 +148,8 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => {
 
+            setAccordianState2(!accordian_state_2);
+
             // NOTE: Uses index of sessions array
             //       => Should probably load the classes on page load...
             const id = sessions[input_val_1]._id; // input field
@@ -155,6 +158,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             axios.get(`http://localhost:4000/classes/${id}`)
                 .then(response => {
                   console.log('response.data: ', response.data);
+                  setSessions_id(response.data);
                 })
                 .catch(error => console.log('error: ', error));
 
@@ -163,6 +167,8 @@ const ClientHomePage = ({setLoggedIn}) => {
           >
             Get Classes by ID
           </Button>
+
+          <ControlledAccordions sessions={sessions_id} num_rows={num_rows} accordian_state_1={accordian_state_2} setAccordianState1={setAccordianState2} />
 
         </div>
 
@@ -290,15 +296,16 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" onClick={() => {
 
-            // -Josh TODO (5/5): Get <duration>
-            const type = input_val_3; // Checkboxes
+            const exercise_type = input_val_3; // Dropdown
 
-            // -Orlando TODO (6/6): Drop API-call here
-            // get classes by type      GET     /api/auth/users/classes/type       type             N/A                Gets all the class of that type.
-            const endpoint = `/api/auth/users/classes/${type}`;
-            axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-                .then(res => console.log('response: ', res))
-                .catch(err => console.log(err));          
+            console.log('exercise_type: ', exercise_type);
+
+            // Client API-Call (5/6): Get specific class by duration
+            axios.get(`http://localhost:4000/classes/exercise_type/${exercise_type}`)
+                .then(response => {
+                  console.log('response.data: ', response.data);
+                })
+                .catch(error => console.log('error: ', error));       
             }}
             disabled={initially_disable(input_val_3)}
           >

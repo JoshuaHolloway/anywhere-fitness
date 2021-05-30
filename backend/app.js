@@ -143,6 +143,36 @@ app.get("/classes/duration/:duration", async (req, res) => {
   }
 });
 
+app.get("/classes/exercise_type/:exercise_type", async (req, res) => {
+
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+
+  const exercise_type = String(req.params.exercise_type);
+  console.log('exercise_type: ', exercise_type);
+
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+
+  try {
+    const sessions = await classes_collection.find({ exercise_type: exercise_type }).toArray();
+    if (sessions.length) {
+      console.log('sessions: ', sessions);
+      res.status(200).json(sessions);
+    } else {
+      console.log('There are no classes with exercise_type: ', exercise_type);
+      res.status(200).json([]);      
+    }
+  } catch (err) {
+    console.log('Error: ', err);
+    res.status(400).json(`Getting classes for exercise_type: ${exercise_type} from db failed`);
+  }
+});
+
 // ==============================================
 //
 // CRUD Create

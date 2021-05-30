@@ -39,6 +39,19 @@ app.get("/classes", async (req, res) => {
     res.status(400).json("Getting classes from db failed");
   }
 });
+app.get("/classes/:id", async (req, res) => {
+
+  const ID = String(req.params.id);
+
+  try {
+    const session = await classes_collection.find({ _id: mongodb.ObjectID(ID)}).toArray();
+    console.log('session: ', session);
+    res.status(200).json(session);
+  } catch (err) {
+    console.log('Error: ', err);
+    res.status(400).json(`Getting class ${ID} from db failed`);
+  }
+});
 
 // ==============================================
 //

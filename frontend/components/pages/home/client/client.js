@@ -129,7 +129,7 @@ const ClientHomePage = ({setLoggedIn}) => {
           >
             Get All Classes
           </Button>
-          
+
           <ControlledAccordions josh={josh} sessions={sessions} num_rows={num_rows} accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
           
         </div>
@@ -149,14 +149,18 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => {
 
-            const id = input_val_1; // input field
+            // NOTE: Uses index of sessions array
+            //       => Should probably load the classes on page load
+            const id = sessions[input_val_1]._id; // input field
 
-            // -Orlando TODO (2/6): Drop API-call here
-            // get classes by Id        GET     /api/auth/users/classes/:id        id               N/A                Fetches the class with given Id.
-            const endpoint = `/api/auth/users/classes/:${id}`;
-            axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-                .then(res => console.log('response: ', res))
-                .catch(err => console.log(err));
+              // Client API-Call (2/6): Get specific class
+              axios.get(`http://localhost:4000/classes/${id}`)
+                  .then(response => {
+                    const sessions = response.data;
+                    console.log('response.data: ', response.data);
+                  })
+                  .catch(error => console.log('error: ', error));
+
             }}
             disabled={initially_disable(input_val_1)}
           >

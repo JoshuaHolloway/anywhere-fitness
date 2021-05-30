@@ -40,7 +40,10 @@ export default function ControlledAccordions({josh, sessions, num_rows, accordia
 
 
       <Accordion expanded={accordian_state_1}>
-
+        <AccordionSummary
+          // expandIcon={<ExpandMoreIcon />}
+        >
+        </AccordionSummary>
         <AccordionDetails>
 
           <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>

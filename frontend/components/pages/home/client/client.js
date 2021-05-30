@@ -116,12 +116,10 @@ const ClientHomePage = ({setLoggedIn}) => {
               // Client API-Call (1/6): Get all classes
               axios.get('http://localhost:4000/classes')
                     .then(response => {
-                      const sessions = response.data;
                       console.log('response.data: ', response.data);
                       const numRows = Math.ceil(classes.length / 3);
                       setNumRows(numRows);
-                      setSessions(sessions);
-                      setJosh(sessions[0]._id);
+                      setSessions(response.data);
                       console.log('sessions.length: ', sessions.length, 'Math.ceil(sessions.length / 3): ', numRows ,' num_rows: ', num_rows);
                     })
                     .catch(error => console.log('error: ', error));
@@ -150,25 +148,22 @@ const ClientHomePage = ({setLoggedIn}) => {
           <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => {
 
             // NOTE: Uses index of sessions array
-            //       => Should probably load the classes on page load
+            //       => Should probably load the classes on page load...
             const id = sessions[input_val_1]._id; // input field
 
-              // Client API-Call (2/6): Get specific class
-              axios.get(`http://localhost:4000/classes/${id}`)
-                  .then(response => {
-                    const sessions = response.data;
-                    console.log('response.data: ', response.data);
-                  })
-                  .catch(error => console.log('error: ', error));
+            // Client API-Call (2/6): Get specific class
+            axios.get(`http://localhost:4000/classes/${id}`)
+                .then(response => {
+                  console.log('response.data: ', response.data);
+                })
+                .catch(error => console.log('error: ', error));
 
             }}
             disabled={initially_disable(input_val_1)}
           >
             Get Classes by ID
           </Button>
-        
 
-        
         </div>
 
         {/* - - - - - - - - - - - - - - - - - - */}
@@ -194,13 +189,14 @@ const ClientHomePage = ({setLoggedIn}) => {
           <Button variant="outlined" color="secondary" onClick={() => {
 
             const location = input_val_4; // dropdown
+            console.log('location: ', location);
 
-            // -Orlando TODO (3/6): Drop API-call here
-            // get classes by Location  GET     /api/auth/users/classes/location   location         N/A                Gets all the class in that location
-            const endpoint = `/api/auth/users/classes/${location}`;
-            axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-                .then(res => console.log('response: ', res))
-                .catch(err => console.log(err));
+            // Client API-Call (2/6): Get specific class
+            axios.get(`http://localhost:4000/classes/location/${location}`)
+                .then(response => {
+                  console.log('response.data: ', response.data);
+                })
+                .catch(error => console.log('error: ', error));
             }}
             disabled={initially_disable(input_val_4)}
           >

@@ -81,6 +81,35 @@ app.get("/classes/location/:location", async (req, res) => {
     res.status(400).json(`Getting classes for location: ${location} from db failed`);
   }
 });
+app.get("/classes/intensity/:intensity", async (req, res) => {
+
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+
+  const intensity = String(req.params.intensity);
+  console.log('intensity: ', intensity);
+
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+  console.log('===========================================');
+
+  try {
+    const sessions = await classes_collection.find({ intensity: intensity }).toArray();
+    if (sessions.length) {
+      console.log('sessions: ', sessions);
+      res.status(200).json(sessions);
+    } else {
+      console.log('There are no classes at intensity: ', intensity);
+      res.status(200).json([]);      
+    }
+  } catch (err) {
+    console.log('Error: ', err);
+    res.status(400).json(`Getting classes for intensity: ${intensity} from db failed`);
+  }
+});
 
 // ==============================================
 //

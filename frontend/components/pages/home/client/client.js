@@ -151,7 +151,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             //       => Should probably load the classes on page load...
             const id = sessions[input_val_1]._id; // input field
 
-            // Client API-Call (2/6): Get specific class
+            // Client API-Call (2/6): Get specific class by ID
             axios.get(`http://localhost:4000/classes/${id}`)
                 .then(response => {
                   console.log('response.data: ', response.data);
@@ -191,7 +191,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             const location = input_val_4; // dropdown
             console.log('location: ', location);
 
-            // Client API-Call (2/6): Get specific class
+            // Client API-Call (3/6): Get class by location
             axios.get(`http://localhost:4000/classes/location/${location}`)
                 .then(response => {
                   console.log('response.data: ', response.data);
@@ -225,12 +225,12 @@ const ClientHomePage = ({setLoggedIn}) => {
 
             const intensity = input_val_5; // dropdown
 
-            // -Orlando TODO (4/6): Drop API-call here
-            // get classes by intensity GET     /api/auth/users/classes/intensity  intensity        N/A                Gets all the class in that intensity. "low", "medium", or "high"
-            const endpoint = `/api/auth/users/classes/${intensity}`;
-            axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-                .then(res => console.log('response: ', res))
-                .catch(err => console.log(err));
+            // Client API-Call (2/6): Get specific class
+            axios.get(`http://localhost:4000/classes/intensity/${intensity}`)
+                .then(response => {
+                  console.log('response.data: ', response.data);
+                })
+                .catch(error => console.log('error: ', error));
             }}
             disabled={initially_disable(input_val_5)}
           >

@@ -16,9 +16,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
-// import SimpleAccordion from './accordian.js';
-import Accordian_GetAllClasses from './1-GetAllClassesAccordian.js';
-
 import ControlledAccordions from './accordian-controlled-1.js';
 
 import {buttonStylesLogout} from '../../../../global-styles/form-styles.js';
@@ -79,6 +76,12 @@ const ClientHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
+  const [accordian_state_1, setAccordianState1] = useState(false);
+  const [sessions, setSessions]                 = useState([]);
+  const [num_rows, setNumRows]                  = useState(1);
+
+  // --------------------------------------------
+
   const initially_disable = (input_val) => input_val ? false : true;
 
   // --------------------------------------------
@@ -104,34 +107,29 @@ const ClientHomePage = ({setLoggedIn}) => {
 
         {/* - - - - - - - - - - - - - - - - - - */}
         <div className="card">
+
           <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => 
             {
+              setAccordianState1(!accordian_state_1);
 
-              // // -Orlando TODO (1/6): Drop API-call here
-              // // --get all classes          GET     /api/auth/users/classes            N/A              N/A                Fetches all the classes from the database
-              // const endpoint = '/api/auth/users/classes';
-              // axios.get(`https://anywhere-fitness-ptbw.herokuapp.com${endpoint}`)
-              //     .then(res => console.log('response: ', res))
-              //     .catch(err => console.log(err));
-
-
-              const id = 0;
-              axios.get(`http://localhost:5000/api/movies/${id}`) // Study this endpoint with Postman
-                   .then(response => {
-                     // Set the response data as the 'movieList' slice of state
-                     const {data: movie} = response;
-                     console.log('movie: ', movie);
-                     setMovie(movie);
-                   })
-                   .catch(error => {
-                     console.error('Server Error', error);
-                   });
+              // Client API-Call (1/6): Get all classes
+              axios.get('http://localhost:4000/classes')
+                    .then(response => {
+                      const sessions = response.data;
+                      console.log('response.data: ', response.data);
+                      const numRows = Math.ceil(classes.length / 3);
+                      setNumRows(numRows);
+                      setSessions(sessions);
+                      console.log('sessions.length: ', sessions.length, 'Math.ceil(sessions.length / 3): ', numRows ,' num_rows: ', num_rows);
+                    })
+                    .catch(error => console.log('error: ', error));
             }}
           >
             Get All Classes
           </Button>
 
-          <Accordian_GetAllClasses />
+          <ControlledAccordions accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
+          
         </div>
         {/* - - - - - - - - - - - - - - - - - - */}
 
@@ -163,7 +161,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             Get Classes by ID
           </Button>
         
-          <ControlledAccordions />
+
         
         </div>
 

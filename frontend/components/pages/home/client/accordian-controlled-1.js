@@ -6,6 +6,8 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+// ==============================================
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -21,23 +23,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ControlledAccordions() {
+// ==============================================
+
+export default function ControlledAccordions({accordian_state_1, setAccordianState1}) {
+
+  // --------------------------------------------
+
   const classes = useStyles();
   
-  const [state, setState] = React.useState(false);
-
+  // --------------------------------------------
 
   return (
     <div style={{border: "dashed hotpink 2px"}}>
-      <div style={{background: 'deepskyblue', height: '100px', width: '100px'}} onClick={() => {
-        setState(!state);
-      }}>
-        CLICK ME
-      </div>
+
 
       <div className={classes.root}>
       
-        <Accordion expanded={state}>
+        <Accordion expanded={accordian_state_1}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"

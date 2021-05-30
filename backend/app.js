@@ -114,19 +114,6 @@ app.post("/classes/update/:id", async (req, res) => {
     res.json("Updating classfailed!");
   } 
 });
-// app.post("/classes/update/:id", async (req, res) => {
-
-//   const ID = String(req.params.id);
-
-//   try {
-//     const result = await pets.updateOne({_id: mongodb.ObjectID(ID)}, {$set: {name: 'UPDATED-josh'}});
-//     console.log('Updated animal');
-//     res.json(result);
-//   } catch(e) { 
-//     console.log('Updating animal failed! Error: ', e);
-//     res.json("Updating animal failed!");
-//   } 
-// });
 
 // ==============================================
 //
@@ -147,7 +134,6 @@ app.get("/classes/delete/:id", async (req, res) => {
   } 
 });
 
-
 // ==============================================
 //
 // Register
@@ -160,6 +146,9 @@ app.post("/register", async (req, res) => {
   const password = req.body.password;
   const role = req.body.role;
   
+  // TODO: Move this to the frontend so that the hashed password is transmitted
+  //       to the backend to avoid man-in-the-middle attacks!!!
+
   // Cryptographically hash password
   bcrypt.genSalt(saltRounds).then((salt) => {
     console.log('salt: ', salt);

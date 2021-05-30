@@ -76,13 +76,15 @@ const ClientHomePage = ({setLoggedIn}) => {
 
   // --------------------------------------------
 
-  const [accordian_state_1, setAccordianState1] = useState(false);
-  const [accordian_state_2, setAccordianState2] = useState(false);
-  const [accordian_state_3, setAccordianState3] = useState(false);
-  const [sessions, setSessions]                 = useState([]);
-  const [sessions_id, setSessions_id]           = useState([]);
-  const [sessions_loc, setSessions_loc]         = useState([]);
-  const [num_rows, setNumRows]                  = useState(1);
+  const [accordian_state_1, setAccordianState1]     = useState(false); // all classes
+  const [accordian_state_2, setAccordianState2]     = useState(false); // id
+  const [accordian_state_3, setAccordianState3]     = useState(false); // location
+  const [accordian_state_4, setAccordianState4]     = useState(false); // intensity
+  const [sessions, setSessions]                     = useState([]);
+  const [sessions_id, setSessions_id]               = useState([]);
+  const [sessions_loc, setSessions_loc]             = useState([]);
+  const [sessions_intensity, setSessions_intensity] = useState([]);
+  const [num_rows, setNumRows]                      = useState(1);
 
   // --------------------------------------------
 
@@ -131,7 +133,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             Get All Classes
           </Button>
 
-          <ControlledAccordions sessions={sessions} num_rows={num_rows} accordian_state_1={accordian_state_1} setAccordianState1={setAccordianState1} />
+          <ControlledAccordions sessions={sessions} num_rows={num_rows} accordian_state_1={accordian_state_1} />
           
         </div>
         {/* - - - - - - - - - - - - - - - - - - */}
@@ -150,7 +152,7 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => {
 
-            setAccordianState2(!accordian_state_2);
+            setAccordianState2(true);
 
             // NOTE: Uses index of sessions array
             //       => Should probably load the classes on page load...
@@ -170,7 +172,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             Get Classes by ID
           </Button>
 
-          <ControlledAccordions sessions={sessions_id} num_rows={num_rows} accordian_state_1={accordian_state_2} setAccordianState1={setAccordianState2} />
+          <ControlledAccordions sessions={sessions_id} num_rows={num_rows} accordian_state_1={accordian_state_2} />
 
         </div>
 
@@ -196,7 +198,7 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" onClick={() => {
 
-            setAccordianState3(!accordian_state_3);
+            setAccordianState3(true);
 
             const location = input_val_4; // dropdown
             console.log('location: ', location);
@@ -214,7 +216,7 @@ const ClientHomePage = ({setLoggedIn}) => {
             Get Classes by Location
           </Button>
 
-          <ControlledAccordions sessions={sessions_loc} num_rows={num_rows} accordian_state_1={accordian_state_3} setAccordianState1={setAccordianState3} />
+          <ControlledAccordions sessions={sessions_loc} num_rows={num_rows} accordian_state_1={accordian_state_3} />
         </div>
         
         {/* - - - - - - - - - - - - - - - - - - */}
@@ -236,12 +238,15 @@ const ClientHomePage = ({setLoggedIn}) => {
 
           <Button variant="outlined" color="secondary" style={{width: '100%'}} onClick={() => {
 
+            setAccordianState4(true);
+
             const intensity = input_val_5; // dropdown
 
             // Client API-Call (4/6): Get specific class by intensity
             axios.get(`http://localhost:4000/classes/intensity/${intensity}`)
                 .then(response => {
                   console.log('response.data: ', response.data);
+                  setSessions_intensity(response.data);
                 })
                 .catch(error => console.log('error: ', error));
             }}
@@ -249,6 +254,8 @@ const ClientHomePage = ({setLoggedIn}) => {
           >
             Get Classes by Intensity
           </Button>
+
+          <ControlledAccordions sessions={sessions_intensity} num_rows={num_rows} accordian_state_1={accordian_state_4} />
         </div>
 
         {/* - - - - - - - - - - - - - - - - - - */}

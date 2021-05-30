@@ -46,7 +46,7 @@ export default function ControlledAccordions({josh, sessions, num_rows, accordia
         </AccordionSummary>
         <AccordionDetails>
 
-          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gridTemplateRows: `repeat(${num_rows}, 275px)`, gap: '10px', margin: '20px 0'}}>
             {sessions && sessions.map((session, idx) => {
               return (
                 <Card key={session._id} session={session} />
